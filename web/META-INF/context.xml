@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/DavidMohale2333908">
+    <Resource name="jdbc/ProcureGovDB" 
+              auth="Container" 
+              type="javax.sql.DataSource"
+              factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
+              maxActive="20" 
+              maxIdle="10" 
+              maxWait="10000"
+              username="root" 
+              password="" 
+              driverClassName="com.mysql.cj.jdbc.Driver"
+              url="jdbc:mysql://localhost:3306/DavidMohale2333908?useSSL=false&amp;allowPublicKeyRetrieval=true"
+              validationQuery="SELECT 1"
+              testOnBorrow="true"
+              testWhileIdle="true"
+              timeBetweenEvictionRunsMillis="30000"
+              minEvictableIdleTimeMillis="60000"/>
+</Context>

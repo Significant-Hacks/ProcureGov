@@ -1,0 +1,174 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" font-family="Inter,Segoe UI,sans-serif">
+<defs>
+<style>
+  .tbl{fill:#1B4332;stroke:#0d2818;stroke-width:1.5;rx:6}
+  .hdr{fill:#fff;font-size:13px;font-weight:700}
+  .col{fill:#e8f5e9;font-size:10.5px}
+  .pk{fill:#C9A227;font-size:10.5px;font-weight:700}
+  .fk{fill:#1565C0;font-size:10.5px;font-style:italic}
+  .rel{fill:none;stroke:#555;stroke-width:1.5}
+  .card{fill:#333;font-size:10px;font-weight:600}
+</style>
+</defs>
+
+<!-- users -->
+<rect x="30" y="30" width="200" height="175" class="tbl"/>
+<rect x="30" y="30" width="200" height="24" fill="#0d2818" rx="6"/><text x="130" y="46" class="hdr" text-anchor="middle">users</text>
+<text x="38" y="72" class="pk">PK id INT AUTO_INC</text>
+<text x="38" y="86" class="col">email VARCHAR(255) UNIQUE</text>
+<text x="38" y="100" class="col">password_hash VARCHAR(64)</text>
+<text x="38" y="114" class="col">role ENUM(...)</text>
+<text x="38" y="128" class="col">is_active BOOLEAN</text>
+<text x="38" y="142" class="col">failed_login_attempts INT</text>
+<text x="38" y="156" class="col">account_locked BOOLEAN</text>
+<text x="38" y="170" class="col">created_at, updated_at</text>
+
+<!-- suppliers -->
+<rect x="30" y="260" width="200" height="130" class="tbl"/>
+<rect x="30" y="260" width="200" height="24" fill="#0d2818" rx="6"/><text x="130" y="276" class="hdr" text-anchor="middle">suppliers</text>
+<text x="38" y="302" class="pk">PK id INT AUTO_INC</text>
+<text x="38" y="316" class="fk">FK user_id INT UNIQUE</text>
+<text x="38" y="330" class="col">company_name VARCHAR(255)</text>
+<text x="38" y="344" class="col">registration_number UNIQUE</text>
+<text x="38" y="358" class="col">physical_address, contact_number</text>
+<text x="38" y="372" class="col">is_verified BOOLEAN</text>
+
+<!-- officers -->
+<rect x="270" y="260" width="200" height="100" class="tbl"/>
+<rect x="270" y="260" width="200" height="24" fill="#0d2818" rx="6"/><text x="370" y="276" class="hdr" text-anchor="middle">officers</text>
+<text x="278" y="302" class="pk">PK id INT AUTO_INC</text>
+<text x="278" y="316" class="fk">FK user_id INT UNIQUE</text>
+<text x="278" y="330" class="col">full_name, department</text>
+<text x="278" y="344" class="col">staff_id UNIQUE</text>
+
+<!-- evaluators -->
+<rect x="510" y="260" width="200" height="100" class="tbl"/>
+<rect x="510" y="260" width="200" height="24" fill="#0d2818" rx="6"/><text x="610" y="276" class="hdr" text-anchor="middle">evaluators</text>
+<text x="518" y="302" class="pk">PK id INT AUTO_INC</text>
+<text x="518" y="316" class="fk">FK user_id INT UNIQUE</text>
+<text x="518" y="330" class="col">full_name, department</text>
+<text x="518" y="344" class="col">staff_id UNIQUE</text>
+
+<!-- user_tokens -->
+<rect x="270" y="30" width="220" height="115" class="tbl"/>
+<rect x="270" y="30" width="220" height="24" fill="#0d2818" rx="6"/><text x="380" y="46" class="hdr" text-anchor="middle">user_tokens</text>
+<text x="278" y="72" class="pk">PK id INT AUTO_INC</text>
+<text x="278" y="86" class="fk">FK user_id INT</text>
+<text x="278" y="100" class="col">token VARCHAR(64) UNIQUE</text>
+<text x="278" y="114" class="col">token_type ENUM(...)</text>
+<text x="278" y="128" class="col">expires_at, used, created_at</text>
+
+<!-- tenders -->
+<rect x="530" y="30" width="230" height="175" class="tbl"/>
+<rect x="530" y="30" width="230" height="24" fill="#0d2818" rx="6"/><text x="645" y="46" class="hdr" text-anchor="middle">tenders</text>
+<text x="538" y="72" class="pk">PK id INT AUTO_INC</text>
+<text x="538" y="86" class="fk">FK created_by INT → users</text>
+<text x="538" y="100" class="col">reference_number UNIQUE</text>
+<text x="538" y="114" class="col">title, category ENUM(...)</text>
+<text x="538" y="128" class="col">description TEXT</text>
+<text x="538" y="142" class="col">estimated_value DECIMAL(15,2)</text>
+<text x="538" y="156" class="col">submission_deadline DATETIME</text>
+<text x="538" y="170" class="col">status ENUM(6 states)</text>
+<text x="538" y="184" class="col">notice_doc_path, show_est_val</text>
+
+<!-- tender_evaluators -->
+<rect x="800" y="30" width="200" height="100" class="tbl"/>
+<rect x="800" y="30" width="200" height="24" fill="#0d2818" rx="6"/><text x="900" y="46" class="hdr" text-anchor="middle">tender_evaluators</text>
+<text x="808" y="72" class="pk">PK id INT AUTO_INC</text>
+<text x="808" y="86" class="fk">FK tender_id INT</text>
+<text x="808" y="100" class="fk">FK evaluator_id INT</text>
+<text x="808" y="114" class="col">assigned_at DATETIME</text>
+
+<!-- bids -->
+<rect x="800" y="260" width="220" height="145" class="tbl"/>
+<rect x="800" y="260" width="220" height="24" fill="#0d2818" rx="6"/><text x="910" y="276" class="hdr" text-anchor="middle">bids</text>
+<text x="808" y="302" class="pk">PK id INT AUTO_INC</text>
+<text x="808" y="316" class="fk">FK tender_id INT</text>
+<text x="808" y="330" class="fk">FK supplier_id INT</text>
+<text x="808" y="344" class="col">bid_amount DECIMAL(15,2)</text>
+<text x="808" y="358" class="col">technical_compliance TEXT</text>
+<text x="808" y="372" class="col">proposed_timeline_days INT</text>
+<text x="808" y="386" class="col">document_path, submitted_at</text>
+
+<!-- bid_technical_criteria -->
+<rect x="800" y="460" width="220" height="115" class="tbl"/>
+<rect x="800" y="460" width="220" height="24" fill="#0d2818" rx="6"/><text x="910" y="476" class="hdr" text-anchor="middle">bid_technical_criteria</text>
+<text x="808" y="502" class="pk">PK id INT AUTO_INC</text>
+<text x="808" y="516" class="fk">FK bid_id INT</text>
+<text x="808" y="530" class="col">criterion_name, criterion_type</text>
+<text x="808" y="544" class="col">criterion_value</text>
+<text x="808" y="558" class="col">evidence_document_path</text>
+
+<!-- evaluations -->
+<rect x="530" y="460" width="230" height="130" class="tbl"/>
+<rect x="530" y="460" width="230" height="24" fill="#0d2818" rx="6"/><text x="645" y="476" class="hdr" text-anchor="middle">evaluations</text>
+<text x="538" y="502" class="pk">PK id INT AUTO_INC</text>
+<text x="538" y="516" class="fk">FK bid_id INT</text>
+<text x="538" y="530" class="fk">FK tender_id INT</text>
+<text x="538" y="544" class="fk">FK evaluator_id INT</text>
+<text x="538" y="558" class="col">technical_score, price_score</text>
+<text x="538" y="572" class="col">timeline_score, weighted_total</text>
+<text x="538" y="586" class="col">submitted_at</text>
+
+<!-- awards -->
+<rect x="270" y="460" width="220" height="130" class="tbl"/>
+<rect x="270" y="460" width="220" height="24" fill="#0d2818" rx="6"/><text x="380" y="476" class="hdr" text-anchor="middle">awards</text>
+<text x="278" y="502" class="pk">PK id INT AUTO_INC</text>
+<text x="278" y="516" class="fk">FK tender_id INT UNIQUE</text>
+<text x="278" y="530" class="fk">FK winning_bid_id INT</text>
+<text x="278" y="544" class="fk">FK awarded_by INT</text>
+<text x="278" y="558" class="col">awarded_value DECIMAL(15,2)</text>
+<text x="278" y="572" class="col">justification TEXT</text>
+<text x="278" y="586" class="col">awarded_at, confirm_doc_path</text>
+
+<!-- RELATIONSHIP LINES -->
+<!-- users 1:1 suppliers -->
+<line x1="130" y1="205" x2="130" y2="260" class="rel"/>
+<text x="140" y="235" class="card">1:1</text>
+<!-- users 1:1 officers -->
+<line x1="200" y1="205" x2="370" y2="260" class="rel"/>
+<text x="280" y="230" class="card">1:1</text>
+<!-- users 1:1 evaluators -->
+<line x1="230" y1="180" x2="610" y2="260" class="rel"/>
+<text x="420" y="215" class="card">1:1</text>
+<!-- users 1:N user_tokens -->
+<line x1="230" y1="80" x2="270" y2="80" class="rel"/>
+<text x="245" y="75" class="card">1:N</text>
+<!-- users 1:N tenders (created_by) -->
+<line x1="230" y1="120" x2="530" y2="86" class="rel"/>
+<text x="380" y="95" class="card">1:N</text>
+<!-- tenders 1:N tender_evaluators -->
+<line x1="760" y1="80" x2="800" y2="80" class="rel"/>
+<text x="775" y="75" class="card">1:N</text>
+<!-- evaluators M:N tenders (via tender_evaluators) -->
+<line x1="610" y1="360" x2="900" y2="130" class="rel" stroke-dasharray="6,3"/>
+<text x="760" y="250" class="card">M:N</text>
+<!-- tenders 1:N bids -->
+<line x1="700" y1="205" x2="910" y2="260" class="rel"/>
+<text x="810" y="230" class="card">1:N</text>
+<!-- suppliers 1:N bids -->
+<line x1="230" y1="330" x2="800" y2="330" class="rel"/>
+<text x="510" y="325" class="card">1:N</text>
+<!-- bids 1:N bid_technical_criteria -->
+<line x1="910" y1="405" x2="910" y2="460" class="rel"/>
+<text x="920" y="435" class="card">1:N</text>
+<!-- bids 1:N evaluations -->
+<line x1="800" y1="370" x2="760" y2="460" class="rel"/>
+<text x="770" y="415" class="card">1:N</text>
+<!-- tenders 1:N evaluations -->
+<line x1="645" y1="205" x2="645" y2="460" class="rel" stroke-dasharray="4,2"/>
+<text x="650" y="340" class="card">1:N</text>
+<!-- evaluators 1:N evaluations -->
+<line x1="610" y1="360" x2="600" y2="460" class="rel" stroke-dasharray="4,2"/>
+<text x="580" y="415" class="card">1:N</text>
+<!-- tenders 1:1 awards -->
+<line x1="580" y1="205" x2="380" y2="460" class="rel"/>
+<text x="470" y="330" class="card">1:1</text>
+<!-- bids 1:1 awards (winning) -->
+<line x1="800" y1="390" x2="490" y2="520" class="rel" stroke-dasharray="4,2"/>
+<text x="640" y="460" class="card">1:1</text>
+
+<!-- Title -->
+<text x="600" y="870" font-size="14" font-weight="700" fill="#1B4332" text-anchor="middle">ProcureGov — Entity Relationship Diagram (3NF Compliant)</text>
+<text x="600" y="890" font-size="10" fill="#666" text-anchor="middle">PK = Primary Key · FK = Foreign Key · Solid = Identifying · Dashed = Non-Identifying</text>
+</svg>

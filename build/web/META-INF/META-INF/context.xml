@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/ProcureGov">
+    <!-- Database connection will be configured by each user's environment -->
+    <!-- Students should update these values based on their MySQL setup -->
+    <Resource name="jdbc/ProcureGovDB" 
+              auth="Container" 
+              type="javax.sql.DataSource"
+              maxTotal="20" 
+              maxIdle="10" 
+              maxWaitMillis="-1"
+              username="root" 
+              password="" 
+              driverClassName="com.mysql.cj.jdbc.Driver"
+              url="jdbc:mysql://localhost:3306/ProcureGov?useSSL=false&amp;allowPublicKeyRetrieval=true"/>
+    
+    <!-- Mail session using JNDI - no properties files needed -->
+    <!-- Students should update these values based on their email provider -->
+    <Resource name="mail/ProcureGovMail" 
+              auth="Container"
+              type="javax.mail.Session"
+              mail.smtp.host="smtp.gmail.com"
+              mail.smtp.port="587"
+              mail.smtp.auth="true"
+              mail.smtp.starttls.enable="true"
+              mail.transport.protocol="smtp"
+              mail.smtp.user="significant.hacks@gmail.com"
+              mail.smtp.password="your-app-password"/>
+</Context>

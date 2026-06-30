@@ -1,0 +1,244 @@
+<svg viewBox="0 0 1200 900" xmlns="http://www.w3.org/2000/svg">
+  <!-- Define arrow markers -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#1B4332" />
+    </marker>
+    <marker id="arrowhead-return" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#0F2B1F" />
+    </marker>
+    <style>
+      .layer-label { font-size: 14px; font-weight: bold; fill: #1B4332; }
+      .box-title { font-size: 16px; font-weight: 700; fill: white; text-anchor: middle; }
+      .box-subtitle { font-size: 12px; fill: rgba(255,255,255,0.9); text-anchor: middle; }
+      .arrow-label { font-size: 11px; fill: #1B4332; font-weight: 600; }
+      .section-bg { fill: #F5F1EB; stroke: #D5CDBD; stroke-width: 2; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="900" fill="#FFFFFF"/>
+
+  <!-- Title -->
+  <text x="600" y="35" font-size="28" font-weight="800" text-anchor="middle" fill="#1B4332">
+    ProcureGov MVC Architecture
+  </text>
+
+  <!-- Layer 1: Browser/Client -->
+  <g>
+    <rect x="450" y="60" width="300" height="80" rx="8" fill="#40916C" stroke="#1B4332" stroke-width="2"/>
+    <text x="600" y="95" class="box-title">Browser / Client</text>
+    <text x="600" y="115" class="box-subtitle">User Interface (HTML/CSS/JS)</text>
+  </g>
+
+  <!-- Arrow: Browser down to Filter -->
+  <path d="M 600 140 L 600 180" stroke="#1B4332" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <text x="620" y="165" class="arrow-label">HTTP Request</text>
+
+  <!-- Layer 2: AuthRedirectFilter -->
+  <g>
+    <rect x="400" y="180" width="400" height="70" rx="8" fill="#C9A227" stroke="#1B4332" stroke-width="2"/>
+    <text x="600" y="215" class="box-title" fill="#1B4332">AuthRedirectFilter</text>
+    <text x="600" y="235" class="box-subtitle" fill="#1B4332">Authentication and Authorization Check</text>
+  </g>
+
+  <!-- Arrow: Filter down to Servlets -->
+  <path d="M 600 250 L 600 290" stroke="#1B4332" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+
+  <!-- Layer 3: Servlet Controllers -->
+  <g>
+    <rect x="50" y="290" width="220" height="100" rx="8" fill="#2D6A4F" stroke="#1B4332" stroke-width="2"/>
+    <text x="160" y="330" class="box-title">LoginServlet</text>
+    <text x="160" y="350" class="box-subtitle">Authentication</text>
+    <text x="160" y="365" class="box-subtitle">User Management</text>
+  </g>
+
+  <g>
+    <rect x="330" y="290" width="220" height="100" rx="8" fill="#2D6A4F" stroke="#1B4332" stroke-width="2"/>
+    <text x="440" y="330" class="box-title">TenderServlet</text>
+    <text x="440" y="350" class="box-subtitle">Tender Operations</text>
+    <text x="440" y="365" class="box-subtitle">Management</text>
+  </g>
+
+  <g>
+    <rect x="610" y="290" width="220" height="100" rx="8" fill="#2D6A4F" stroke="#1B4332" stroke-width="2"/>
+    <text x="720" y="330" class="box-title">EvaluationServlet</text>
+    <text x="720" y="350" class="box-subtitle">Bid Evaluation</text>
+    <text x="720" y="365" class="box-subtitle">Scoring</text>
+  </g>
+
+  <g>
+    <rect x="890" y="290" width="220" height="100" rx="8" fill="#2D6A4F" stroke="#1B4332" stroke-width="2"/>
+    <text x="1000" y="330" class="box-title">ReportServlet</text>
+    <text x="1000" y="350" class="box-subtitle">Reports and</text>
+    <text x="1000" y="365" class="box-subtitle">Analytics</text>
+  </g>
+
+  <text x="50" y="420" class="layer-label">CONTROLLER LAYER (Servlets)</text>
+
+  <!-- Arrows from Filter to Servlets -->
+  <path d="M 550 250 L 160 290" stroke="#1B4332" stroke-width="1.5" fill="none" marker-end="url(#arrowhead)" stroke-dasharray="5,5"/>
+  <path d="M 580 250 L 440 290" stroke="#1B4332" stroke-width="1.5" fill="none" marker-end="url(#arrowhead)" stroke-dasharray="5,5"/>
+  <path d="M 620 250 L 720 290" stroke="#1B4332" stroke-width="1.5" fill="none" marker-end="url(#arrowhead)" stroke-dasharray="5,5"/>
+  <path d="M 650 250 L 1000 290" stroke="#1B4332" stroke-width="1.5" fill="none" marker-end="url(#arrowhead)" stroke-dasharray="5,5"/>
+
+  <!-- Arrows from Servlets down to Service Layer -->
+  <path d="M 160 390 L 160 450" stroke="#1B4332" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 440 390 L 440 450" stroke="#1B4332" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 720 390 L 720 450" stroke="#1B4332" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 1000 390 L 1000 450" stroke="#1B4332" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+
+  <!-- Layer 4: Service Layer -->
+  <g>
+    <rect x="50" y="450" width="220" height="90" rx="8" fill="#40916C" stroke="#1B4332" stroke-width="2"/>
+    <text x="160" y="480" class="box-title">EvaluationService</text>
+    <text x="160" y="500" class="box-subtitle">Scoring Logic</text>
+    <text x="160" y="515" class="box-subtitle">Calculations</text>
+  </g>
+
+  <g>
+    <rect x="330" y="450" width="220" height="90" rx="8" fill="#40916C" stroke="#1B4332" stroke-width="2"/>
+    <text x="440" y="480" class="box-title">EmailService</text>
+    <text x="440" y="500" class="box-subtitle">Email Notifications</text>
+    <text x="440" y="515" class="box-subtitle">Alerts and Updates</text>
+  </g>
+
+  <g>
+    <rect x="610" y="450" width="220" height="90" rx="8" fill="#40916C" stroke="#1B4332" stroke-width="2"/>
+    <text x="720" y="480" class="box-title">NotificationService</text>
+    <text x="720" y="500" class="box-subtitle">Push Notifications</text>
+    <text x="720" y="515" class="box-subtitle">Events</text>
+  </g>
+
+  <g>
+    <rect x="890" y="450" width="220" height="90" rx="8" fill="#40916C" stroke="#1B4332" stroke-width="2"/>
+    <text x="1000" y="480" class="box-title">ReportService</text>
+    <text x="1000" y="500" class="box-subtitle">Report Generation</text>
+    <text x="1000" y="515" class="box-subtitle">Data Processing</text>
+  </g>
+
+  <text x="50" y="570" class="layer-label">SERVICE LAYER (Business Logic)</text>
+
+  <!-- Arrows from Service to DAO -->
+  <path d="M 160 540 L 160 600" stroke="#1B4332" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 440 540 L 440 600" stroke="#1B4332" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 720 540 L 720 600" stroke="#1B4332" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 1000 540 L 1000 600" stroke="#1B4332" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+
+  <!-- Layer 5: DAO Layer -->
+  <g>
+    <rect x="150" y="600" width="200" height="90" rx="8" fill="#1B4332" stroke="#0F2B1F" stroke-width="2"/>
+    <text x="250" y="630" class="box-title">TenderDAO</text>
+    <text x="250" y="650" class="box-subtitle">CRUD Operations</text>
+    <text x="250" y="665" class="box-subtitle">Database Queries</text>
+  </g>
+
+  <g>
+    <rect x="430" y="600" width="200" height="90" rx="8" fill="#1B4332" stroke="#0F2B1F" stroke-width="2"/>
+    <text x="530" y="630" class="box-title">UserDAO</text>
+    <text x="530" y="650" class="box-subtitle">User Management</text>
+    <text x="530" y="665" class="box-subtitle">CRUD Queries</text>
+  </g>
+
+  <g>
+    <rect x="710" y="600" width="200" height="90" rx="8" fill="#1B4332" stroke="#0F2B1F" stroke-width="2"/>
+    <text x="810" y="630" class="box-title">BidDAO</text>
+    <text x="810" y="650" class="box-subtitle">Bid Operations</text>
+    <text x="810" y="665" class="box-subtitle">Query Execution</text>
+  </g>
+
+  <g>
+    <rect x="990" y="600" width="200" height="90" rx="8" fill="#1B4332" stroke="#0F2B1F" stroke-width="2"/>
+    <text x="1090" y="630" class="box-title">ReportDAO</text>
+    <text x="1090" y="650" class="box-subtitle">Data Retrieval</text>
+    <text x="1090" y="665" class="box-subtitle">Aggregation</text>
+  </g>
+
+  <text x="50" y="720" class="layer-label">DATA ACCESS LAYER (DAO)</text>
+
+  <!-- Arrows from DAO to Database -->
+  <path d="M 250 690 L 250 760" stroke="#1B4332" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 530 690 L 530 760" stroke="#1B4332" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 810 690 L 810 760" stroke="#1B4332" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 1090 690 L 1090 760" stroke="#1B4332" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+
+  <!-- Layer 6: MySQL Database -->
+  <g>
+    <rect x="300" y="760" width="600" height="80" rx="8" fill="#B91C1C" stroke="#1B4332" stroke-width="2"/>
+    <text x="600" y="795" class="box-title" fill="white">MySQL Database</text>
+    <text x="600" y="815" class="box-subtitle" fill="white">Tenders, Users, Bids, Evaluations, Reports</text>
+  </g>
+
+  <!-- Return arrows (Response flow - dashed) -->
+  <path d="M 250 760 L 250 690" stroke="#0F2B1F" stroke-width="2" fill="none" stroke-dasharray="5,5" marker-end="url(#arrowhead-return)"/>
+  <path d="M 530 760 L 530 690" stroke="#0F2B1F" stroke-width="2" fill="none" stroke-dasharray="5,5" marker-end="url(#arrowhead-return)"/>
+  <path d="M 810 760 L 810 690" stroke="#0F2B1F" stroke-width="2" fill="none" stroke-dasharray="5,5" marker-end="url(#arrowhead-return)"/>
+  <path d="M 1090 760 L 1090 690" stroke="#0F2B1F" stroke-width="2" fill="none" stroke-dasharray="5,5" marker-end="url(#arrowhead-return)"/>
+
+  <!-- Return paths from DAO to Service -->
+  <path d="M 160 600 L 160 540" stroke="#0F2B1F" stroke-width="2" fill="none" stroke-dasharray="5,5" marker-end="url(#arrowhead-return)"/>
+  <path d="M 440 600 L 440 540" stroke="#0F2B1F" stroke-width="2" fill="none" stroke-dasharray="5,5" marker-end="url(#arrowhead-return)"/>
+  <path d="M 720 600 L 720 540" stroke="#0F2B1F" stroke-width="2" fill="none" stroke-dasharray="5,5" marker-end="url(#arrowhead-return)"/>
+  <path d="M 1000 600 L 1000 540" stroke="#0F2B1F" stroke-width="2" fill="none" stroke-dasharray="5,5" marker-end="url(#arrowhead-return)"/>
+
+  <!-- Return paths from Service to Controller -->
+  <path d="M 160 450 L 160 390" stroke="#0F2B1F" stroke-width="2" fill="none" stroke-dasharray="5,5" marker-end="url(#arrowhead-return)"/>
+  <path d="M 440 450 L 440 390" stroke="#0F2B1F" stroke-width="2" fill="none" stroke-dasharray="5,5" marker-end="url(#arrowhead-return)"/>
+  <path d="M 720 450 L 720 390" stroke="#0F2B1F" stroke-width="2" fill="none" stroke-dasharray="5,5" marker-end="url(#arrowhead-return)"/>
+  <path d="M 1000 450 L 1000 390" stroke="#0F2B1F" stroke-width="2" fill="none" stroke-dasharray="5,5" marker-end="url(#arrowhead-return)"/>
+
+  <!-- Return arrow from Controllers to JSP Views -->
+  <g>
+    <rect x="400" y="420" width="400" height="20" rx="4" fill="none"/>
+    <text x="600" y="432" font-size="12" font-weight="600" fill="#1B4332" text-anchor="middle">Forward to JSP Views</text>
+  </g>
+
+  <!-- Layer: JSP Views (between Controllers and Browser) -->
+  <g>
+    <rect x="100" y="230" width="180" height="50" rx="8" fill="#40916C" stroke="#1B4332" stroke-width="2"/>
+    <text x="190" y="255" class="box-title">JSP Views</text>
+    <text x="190" y="270" class="box-subtitle">Dashboard, Forms</text>
+  </g>
+
+  <g>
+    <rect x="380" y="230" width="180" height="50" rx="8" fill="#40916C" stroke="#1B4332" stroke-width="2"/>
+    <text x="470" y="255" class="box-title">JSP Views</text>
+    <text x="470" y="270" class="box-subtitle">Lists, Reports</text>
+  </g>
+
+  <g>
+    <rect x="660" y="230" width="180" height="50" rx="8" fill="#40916C" stroke="#1B4332" stroke-width="2"/>
+    <text x="750" y="255" class="box-title">JSP Views</text>
+    <text x="750" y="270" class="box-subtitle">Evaluations</text>
+  </g>
+
+  <g>
+    <rect x="940" y="230" width="180" height="50" rx="8" fill="#40916C" stroke="#1B4332" stroke-width="2"/>
+    <text x="1030" y="255" class="box-title">JSP Views</text>
+    <text x="1030" y="270" class="box-subtitle">Analytics</text>
+  </g>
+
+  <!-- Arrows from Controllers to JSP Views -->
+  <path d="M 160 290 L 190 280" stroke="#0F2B1F" stroke-width="2" fill="none" stroke-dasharray="5,5" marker-end="url(#arrowhead-return)"/>
+  <path d="M 440 290 L 470 280" stroke="#0F2B1F" stroke-width="2" fill="none" stroke-dasharray="5,5" marker-end="url(#arrowhead-return)"/>
+  <path d="M 720 290 L 750 280" stroke="#0F2B1F" stroke-width="2" fill="none" stroke-dasharray="5,5" marker-end="url(#arrowhead-return)"/>
+  <path d="M 1000 290 L 1030 280" stroke="#0F2B1F" stroke-width="2" fill="none" stroke-dasharray="5,5" marker-end="url(#arrowhead-return)"/>
+
+  <!-- Arrows from JSP Views to Browser -->
+  <path d="M 190 230 L 550 140" stroke="#0F2B1F" stroke-width="2" fill="none" stroke-dasharray="5,5" marker-end="url(#arrowhead-return)"/>
+  <path d="M 470 230 L 570 140" stroke="#0F2B1F" stroke-width="2" fill="none" stroke-dasharray="5,5" marker-end="url(#arrowhead-return)"/>
+  <path d="M 750 230 L 610 140" stroke="#0F2B1F" stroke-width="2" fill="none" stroke-dasharray="5,5" marker-end="url(#arrowhead-return)"/>
+  <path d="M 1030 230 L 650 140" stroke="#0F2B1F" stroke-width="2" fill="none" stroke-dasharray="5,5" marker-end="url(#arrowhead-return)"/>
+
+  <!-- Legend -->
+  <g>
+    <rect x="50" y="840" width="1100" height="50" rx="4" fill="#F5F1EB" stroke="#D5CDBD" stroke-width="1"/>
+    <line x1="70" y1="860" x2="100" y2="860" stroke="#1B4332" stroke-width="2" marker-end="url(#arrowhead)"/>
+    <text x="115" y="865" font-size="11" fill="#1B4332">Request Flow (User Action)</text>
+    
+    <line x1="380" y1="860" x2="410" y2="860" stroke="#0F2B1F" stroke-width="2" stroke-dasharray="5,5" marker-end="url(#arrowhead-return)"/>
+    <text x="425" y="865" font-size="11" fill="#1B4332">Response Flow (Data Return)</text>
+    
+    <text x="750" y="865" font-size="11" fill="#1B4332">Each layer has independent responsibility (Separation of Concerns)</text>
+  </g>
+</svg>

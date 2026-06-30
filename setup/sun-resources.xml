@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE resources PUBLIC "-//Sun Microsystems, Inc.//DTD Application Server 9.0 Resource Definitions//EN" "http://www.sun.com/software/appserver/dtds/sun-resources_1_3.dtd">
+<resources>
+    <jdbc-connection-pool name="ProcureGovPool" 
+                          res-type="javax.sql.DataSource" 
+                          datasource-classname="com.mysql.cj.jdbc.MysqlDataSource">
+        <property name="URL" value="jdbc:mysql://localhost:3306/DavidMohale2333908?useSSL=false&amp;allowPublicKeyRetrieval=true"/>
+        <property name="User" value="root"/>
+        <property name="Password" value=""/>
+    </jdbc-connection-pool>
+    <jdbc-resource enabled="true" jndi-name="jdbc/ProcureGovDB" pool-name="ProcureGovPool"/>
+</resources>

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 220" font-family="Inter,sans-serif">
+<style>.b{rx:3;stroke-width:1}.l{fill:#fff;font-size:5px;font-weight:700;text-anchor:middle}.s{fill:#e8f5e9;font-size:4px;text-anchor:middle}.a{fill:none;stroke:#555;stroke-width:.8;marker-end:url(#m)}.a2{fill:none;stroke:#1565C0;stroke-width:.8;marker-end:url(#n)}.t{fill:#333;font-size:4.5px;font-weight:600}</style>
+<defs><marker id="m" markerWidth="4" markerHeight="3" refX="3" refY="1.5" orient="auto"><path d="M0,0 L4,1.5 L0,3z" fill="#555"/></marker><marker id="n" markerWidth="4" markerHeight="3" refX="3" refY="1.5" orient="auto"><path d="M0,0 L4,1.5 L0,3z" fill="#1565C0"/></marker></defs>
+<rect x="50" y="2" width="60" height="14" class="b" fill="#37474F" stroke="#263238"/><text x="80" y="12" class="l">Browser</text>
+<rect x="35" y="24" width="90" height="12" class="b" fill="#BF360C" stroke="#8C2500" stroke-dasharray="2,1"/><text x="80" y="33" class="l" font-size="4.5">AuthRedirectFilter</text>
+<rect x="5" y="44" width="55" height="26" class="b" fill="#6A1B9A" stroke="#4A148C"/><text x="32" y="55" class="l">JSP Views</text><text x="32" y="62" class="s">login, dashboards</text>
+<rect x="68" y="44" width="87" height="26" class="b" fill="#1B5E20" stroke="#0d2818"/><text x="111" y="55" class="l">Servlet Controllers</text><text x="111" y="62" class="s">Login, TenderStatus, SubmitBid</text>
+<rect x="68" y="80" width="87" height="20" class="b" fill="#0D47A1" stroke="#002171"/><text x="111" y="90" class="l">Service Layer</text><text x="111" y="96" class="s">Evaluation · Email</text>
+<rect x="68" y="110" width="87" height="26" class="b" fill="#E65100" stroke="#BF360C"/><text x="111" y="121" class="l">DAO Layer</text><text x="111" y="128" class="s">Tender, Bid, Eval, User</text>
+<rect x="78" y="146" width="67" height="10" class="b" fill="#546E7A" stroke="#37474F"/><text x="111" y="154" class="l" font-size="4">DBConnectionUtil</text>
+<rect x="68" y="164" width="87" height="14" class="b" fill="#00695C" stroke="#004D40"/><text x="111" y="174" class="l">MySQL Database</text>
+<line x1="80" y1="16" x2="80" y2="24" class="a"/><line x1="80" y1="36" x2="80" y2="44" class="a"/>
+<line x1="111" y1="70" x2="111" y2="80" class="a"/><line x1="111" y1="100" x2="111" y2="110" class="a"/>
+<line x1="111" y1="136" x2="111" y2="146" class="a"/><line x1="111" y1="156" x2="111" y2="164" class="a"/>
+<text x="115" y="76" class="t">→</text><text x="115" y="107" class="t">→</text>
+<polyline points="68,171 2,171 2,57 5,57" class="a2"/>
+<text x="6" y="114" class="t" fill="#1565C0" transform="rotate(-90,6,114)">Response ▲</text>
+<line x1="68" y1="57" x2="60" y2="57" class="a2"/>
+<rect x="5" y="188" width="150" height="28" rx="2" fill="#f5f5f5" stroke="#ddd"/>
+<text x="80" y="197" font-size="4.5" font-weight="700" fill="#333" text-anchor="middle">MVC Architecture — ProcureGov</text>
+<line x1="10" y1="205" x2="25" y2="205" class="a"/><text x="28" y="207" font-size="4" fill="#555">Request ▼</text>
+<line x1="10" y1="212" x2="25" y2="212" class="a2"/><text x="28" y="214" font-size="4" fill="#1565C0">Response ▲</text>
+</svg>

@@ -1,7 +1,11 @@
 # ProcureGov - Tender Management System
 
 [![GitHub Repo](https://img.shields.io/badge/GitHub-ProcureGov-blue?logo=github)](https://github.com/Significant-Hacks/ProcureGov)
-[![Java EE](https://img.shields.io/badge/Java%20EE-J2EE-orange)](https://www.oracle.com/java/technologies/java-ee-glance.html)
+[![Java 17+](https://img.shields.io/badge/Java-17%2B-red?logo=openjdk)](https://www.oracle.com/java/)
+[![J2EE Servlets+JSP](https://img.shields.io/badge/J2EE-Servlets%20%7C%20JSP-orange)](https://www.oracle.com/java/technologies/java-ee-glance.html)
+[![MySQL 8.0](https://img.shields.io/badge/MySQL-8.0-blue?logo=mysql)](https://www.mysql.com/)
+[![Tomcat 9+](https://img.shields.io/badge/Tomcat-9%2B-green?logo=apache-tomcat)](https://tomcat.apache.org/)
+[![License MIT](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
 
 ## Overview
 ProcureGov is a **J2EE Advanced Java module project** developed while pursuing a **BSc (Hons) Computing degree with a specialization in Software Engineering** (rated **96%**). It is a web-based Tender Management System for the Ministry of Public Works of the Kingdom of Lesotho, supporting three user roles: Procurement Officers, Suppliers, and Evaluation Committee Members.

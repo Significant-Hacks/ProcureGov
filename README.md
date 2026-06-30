@@ -136,6 +136,115 @@ See `_docs/Deployment-Guide.md` for deployment instructions.
 
 ---
 
+## Architecture
+
+### 1. Main Modules & Responsibilities
+
+| Layer | Package(s) | Responsibility |
+|-------|-----------|---------------|
+| **Controllers** | `com.procuregov.controller.*` | 26 servlets handling HTTP requests, input validation, and view routing |
+| **Model** | `com.procuregov.model` | 7 domain beans (User, Tender, Bid, Evaluation, Award, UserToken, BidTechnicalCriterion) |
+| **DAO** | `com.procuregov.dao`, `com.procuregov.dao.impl` | 9 interfaces + 9 JDBC implementations — all database access behind interfaces |
+| **Service** | `com.procuregov.service` | 4 classes: scoring engine (`EvaluationService`), notifications (`NotificationService`), email (`EmailService`), PDF generation (`PdfGenerationService`) |
+| **Utility** | `com.procuregov.util` | 8 classes: session management, password hashing, DB connections, file handling, token generation, mail config, online user tracking |
+| **Filter** | `com.procuregov.filter` | `AuthRedirectFilter` — gatekeeper for all protected `/pages/*` URLs with role-based authorization |
+| **Listener** | `com.procuregov.listener`, `com.procuregov.util` | `DBInitListener` (creates upload dirs on startup), `OnlineUserTracker` (tracks active sessions) |
+| **View** | `/web/pages/` | JSP pages organized by role (common, officer, supplier, evaluator, profile, error) |
+
+#### Controller Breakdown by Role
+- **Auth** (8): Login, Logout, Register, ForgotPassword, ResetPassword, ConfirmAccount, EmailVerification, ResendConfirmation
+- **Officer** (7): Dashboard, CreateTender, EditTender, ManageTenders, TenderStatus, AwardContract, BidReport
+- **Supplier** (4): Dashboard, OpenTenders, TenderDetail, SubmitBid
+- **Evaluator** (4): Dashboard, EvaluationList, EvaluationPanel, SubmitScore
+- **Common** (3): Download, AwardNotice, Profile
+
+### 2. Data Flow
+
+```
+HTTP Request
+  ↓
+AuthRedirectFilter — validates session + role for protected paths
+  ↓ (if allowed)
+Servlet (doGet/doPost)
+  ├─ Extracts & validates parameters
+  ├─ Calls Utility classes (SessionUtil, PasswordUtil) for cross-cutting concerns
+  ├─ Instantiates DAO impl & calls data methods
+  ├─ Optionally calls Service classes (EvaluationService, EmailService, etc.)
+  ├─ Sets request attributes with model data
+  └─ Forwards to JSP or sends redirect
+  ↓
+JSP renders HTML via JSTL/EL
+  ↓
+HTTP Response
+```
+
+**Example — Supplier submits a bid:**
+```
+POST /submit-bid → AuthRedirectFilter (checks SUPPLIER role)
+  → SubmitBidServlet.doPost()
+    → Validates tender is Open & deadline not passed
+    → Checks one-bid-per-tender rule
+    → Parses bid amount, compliance, timeline
+    → Handles file upload (PDF/DOCX via Part API)
+    → Calls BidDAOImpl.submit() + BidTechnicalCriterionDAOImpl.insertBatch()
+    → Calls EmailService.notifyBidReceived()
+    → Redirects to /tender-detail?id=X&success=true
+```
+
+### 3. Design Patterns Used
+
+| Pattern | Where | How |
+|---------|-------|-----|
+| **MVC** | Architecture-wide | Model (beans + DAOs) / View (JSPs) / Controller (Servlets) |
+| **DAO** | `com.procuregov.dao` + `.impl` | Interfaces define contracts; JDBC implementations are swappable |
+| **Service Layer** | `com.procuregov.service` | Business logic (scoring, notifications, PDF) abstracted from controllers |
+| **Front Controller / Filter** | `AuthRedirectFilter` | Single gatekeeper for all protected resources |
+| **Singleton** | `OnlineUserTracker`, `ConfigUtil` | Static state — ConcurrentHashMap for online users, Properties for config |
+| **Transfer Object** | `com.procuregov.model` | Serializable JavaBeans for data transfer across layers |
+| **Value Object** | Inner classes | `RankedBid`, `BidWithStatus` — computed data containers |
+| **Template Method** | All servlets | Extend `HttpServlet`, override `doGet()`/`doPost()` |
+| **JNDI / Service Locator** | `DBConnectionUtil`, `MailConfigUtil` | Lookup `DataSource` and `MailSession` from container |
+
+### 4. Potential Architectural Issues
+
+**Critical:**
+- **Hard-coded SMTP credentials** — Gmail app password is committed in `web/WEB-INF/web.xml`. Credentials should use environment variables or server-specific config (e.g., Tomcat context params). **Remove from source control before sharing publicly.**
+- **No dependency injection** — All DAO and Service objects are directly instantiated with `new` in controllers. Tight coupling makes unit testing impossible without refactoring. A constructor-injection approach or a lightweight DI framework would solve this.
+- **Business logic in controllers** — Status transitions (`TenderStatusServlet`), award orchestration (`AwardContractServlet`), and bid validation rules (`SubmitBidServlet`) contain significant logic that belongs in the service layer.
+- **SHA-256 without salt** — Password hashing uses plain SHA-256, which is vulnerable to rainbow table attacks. Production systems should use bcrypt, scrypt, or Argon2 with per-user salts.
+
+**Moderate:**
+- **`ResendConfirmationServlet` is a stub** — Mapped in `web.xml` at `/resend-confirmation` but `doGet()` is empty (no functionality).
+- **Duplicate inner classes** — `AwardContractServlet.RankedBid` and `EvaluationPanelServlet.RankedBid` are identical; should be a shared DTO.
+- **Inconsistent DAO access** — Some servlets bypass DAOs and use raw JDBC for simple lookups (e.g., `SupplierDashboardServlet` queries directly), duplicating logic and risking connection leaks.
+- **Semantic misuse of fields** — `EvaluationDAOImpl` stores `total_bids` in `bidAmount` and `scored_bids` in `technicalScore`, which is fragile and confusing.
+- **No unit tests** — The tight coupling (direct `new` instantiations) and lack of test configuration make automated testing absent.
+
+**Minor:**
+- No logging framework (`java.util.logging.Logger` used directly)
+- `OnlineUserTracker` registered as `HttpSessionListener` but also called explicitly from `SessionUtil`
+- `ConfigUtil` is defined but rarely used — most code reads SMTP config from `web.xml` context params directly
+
+### 5. Tender Lifecycle (State Machine)
+
+```
+Draft → Open → Closed → Under Evaluation → Evaluated → Awarded
+  ^                                            |
+  └────── Edit allowed in Draft only           └── Auto-transition
+                                                   when all evaluators
+                                                   have scored all bids
+```
+
+**Role-based actions per state:**
+- **Draft**: Officer creates/edits tender
+- **Open**: Officer publishes; Suppliers view & submit bids; auto-closes at deadline
+- **Closed**: Officer initiates evaluation (auto-assigns evaluators)
+- **Under Evaluation**: Evaluators submit technical/price/timeline scores
+- **Evaluated**: Auto-transitioned when 100% scoring is complete
+- **Awarded**: Officer selects winner, award record + PDF generated, all bidders notified
+
+---
+
 ## Repository
 - **GitHub**: [github.com/Significant-Hacks/ProcureGov](https://github.com/Significant-Hacks/ProcureGov)
 - **Pre-built WAR**: Included in `dist/` — ready to drop into any Tomcat instance

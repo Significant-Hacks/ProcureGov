@@ -1,5 +1,7 @@
 # ProcureGov - Tender Management System
 
+[![GitHub Repo](https://img.shields.io/badge/GitHub-ProcureGov-blue?logo=github)](https://github.com/Significant-Hacks/ProcureGov)
+
 ## Overview
 ProcureGov is a web-based Tender Management System for the Ministry of Public Works of the Kingdom of Lesotho. It supports three user roles: Procurement Officers, Suppliers, and Evaluation Committee Members.
 
@@ -10,6 +12,24 @@ ProcureGov is a web-based Tender Management System for the Ministry of Public Wo
 - **Build**: NetBeans Ant project
 - **Email**: JavaMail API with SMTP (Gmail)
 - **Security**: SHA-256 password hashing, session-based auth, 3-attempt lockout, email verification, code-based password reset
+
+## Quick Start (from GitHub)
+
+### Clone & Deploy in Minutes
+1. **Clone the repo**:
+   ```
+   git clone https://github.com/Significant-Hacks/ProcureGov.git
+   cd ProcureGov
+   ```
+2. **Start XAMPP** — enable MySQL and Tomcat
+3. **Import the database** — run `sql/schema.sql` in phpMyAdmin or via CLI: `mysql -u root < sql/schema.sql`
+4. **Deploy the pre-built WAR** — copy `dist/DavidMohale2333908.war` into `tomcat/webapps/` (Tomcat auto-deploys it)
+5. **Open in browser**: `http://localhost:8080/DavidMohale2333908/`
+6. **Login** using any credential from the table below (all passwords: `psw123`)
+
+No IDE required. The WAR inside `dist/` is ready to deploy.
+
+---
 
 ## Setup Instructions (XAMPP)
 
@@ -51,8 +71,15 @@ Email settings are configured in `web/WEB-INF/web.xml` as context parameters:
 **Important**: No external properties files are used. All configuration is via JNDI (`context.xml`) and context parameters (`web.xml`).
 
 ### 6. Deploy & Run
+
+**Option A — NetBeans:**
 1. Right-click project → **Clean and Build**
 2. Right-click project → **Run**
+3. Open browser: `http://localhost:8080/DavidMohale2333908/`
+
+**Option B — Direct WAR Deploy (No IDE):**
+1. Copy `dist/DavidMohale2333908.war` into `tomcat/webapps/`
+2. Tomcat will auto-extract and deploy
 3. Open browser: `http://localhost:8080/DavidMohale2333908/`
 
 ---
@@ -106,3 +133,10 @@ Email settings are configured in `web/WEB-INF/web.xml` as context parameters:
 ## Project Structure
 See `_docs/File-Structure.md` for complete file listing.
 See `_docs/Deployment-Guide.md` for deployment instructions.
+
+---
+
+## Repository
+- **GitHub**: [github.com/Significant-Hacks/ProcureGov](https://github.com/Significant-Hacks/ProcureGov)
+- **Pre-built WAR**: Included in `dist/` — ready to drop into any Tomcat instance
+- **All dependencies**: JARs in `web/WEB-INF/lib/` — no manual downloads needed
